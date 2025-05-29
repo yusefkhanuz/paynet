@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Magistr To‘lov CRM</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Magistr To‘lov CRM</h1>
+
+    <form method="POST" action="{{ url_for('index') }}">
+      <label for="student_name">O‘quvchi ismi va familiyasi</label>
+      <input type="text" id="student_name" name="student_name" required>
+
+      <label for="amount">To‘lov summasi (UZS)</label>
+      <input type="number" id="amount" name="amount" min="0" required>
+
+      <label for="course">Kurs nomi</label>
+      <input type="text" id="course" name="course" required>
+
+      <label for="month">To‘lov oyi</label>
+      <select id="month" name="month" required>
+        <option value="" disabled selected>Oyni tanlang</option>
+        <option>Yanvar</option><option>Fevral</option><option>Mart</option><option>Aprel</option>
+        <option>May</option><option>Iyun</option><option>Iyul</option><option>Avgust</option>
+        <option>Sentabr</option><option>Oktabr</option><option>Noyabr</option><option>Dekabr</option>
+      </select>
+
+      <label for="notes">Izoh <span class="optional">(ixtiyoriy)</span></label>
+      <textarea id="notes" name="notes"></textarea>
+
+      <label for="admin">Admin (to‘lovni qabul qilgan)</label>
+      <input type="text" id="admin" name="admin" placeholder="Admin ismi" required>
+
+      <label for="teacher">O‘qituvchi (tayinlangan)</label>
+      <input type="text" id="teacher" name="teacher" placeholder="O‘qituvchi ismi" required>
+
+      <button type="submit">To‘lovni qo‘shish</button>
+    </form>
+
+    <h2>Bugungi to‘lovlar ({{ payments|length }})</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>O‘quvchi</th>
+          <th>Summa</th>
+          <th>Kurs</th>
+          <th>Oyi</th>
+          <th>Izoh</th>
+          <th>Admin</th>
+          <th>O‘qituvchi</th>
+          <th>Sana & Soat</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in payments %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ p[0] }}</td>
+          <td>{{ p[1] }} so‘m</td>
+          <td>{{ p[2] }}</td>
+          <td>{{ p[3] }}</td>
+          <td>{{ p[4] or '-' }}</td>
+          <td>{{ p[5] }}</td>
+          <td>{{ p[6] }}</td>
+          <td>{{ p[7] }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" class="no-data">Hozircha to‘lovlar yo‘q</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
