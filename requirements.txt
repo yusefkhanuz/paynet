@@ -1,0 +1,5 @@
+flask
+flask_sqlalchemy
+pandas
+openpyxl
+python-telegram-bot==13.15
